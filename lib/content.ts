@@ -1,6 +1,6 @@
 export const SITE = {
   name: "Intelligent Tech Solutions",
-  phone: "(330) 571-2836",
+  phone: "+1(330) 571-2836",
   phoneHref: "tel:+13305712836",
   email: "info@itechsolutions.us",
   city: "Cuyahoga Falls",
