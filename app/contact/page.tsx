@@ -115,16 +115,6 @@ function ContactMain() {
             ))}
           </div>
 
-          {/* <div className="relative h-[250px] w-full overflow-hidden rounded-lg bg-surface-3">
-            <Image
-              src="/images/contact-map.png"
-              alt={`Map of the ${SITE.city}, ${SITE.region} area`}
-              fill
-              sizes="(max-width: 1024px) 100vw, 400px"
-              className="object-cover"
-            />
-          </div> */}
-
           <div className="flex flex-col gap-3 rounded-lg border border-line bg-surface p-7">
             <h2 className="text-lg font-bold tracking-[-0.011em] text-fg">
               Prefer a live conversation?

@@ -14,7 +14,7 @@ import { verifyRecaptcha } from "@/lib/recaptcha";
 // else. Types and constants belong in lib/contact-schema.ts.
 
 const SUCCESS_MESSAGE =
-  "Thanks — your enquiry is on its way. We'll reply within one business day.";
+  "Thank You — your enquiry is on its way. We'll reply within one business day.";
 const GENERIC_ERROR =
   "Something went wrong sending your enquiry. Please try again, or email us directly.";
 
@@ -64,14 +64,14 @@ async function handleSubmission(formData: FormData): Promise<ContactFormState> {
     await clientIp()
   );
 
-  if (!captcha.ok) {
-    console.warn("[contact] reCAPTCHA rejected:", captcha.reason);
-    return {
-      status: "error",
-      message: "We couldn't verify that you're human. Please tick the box and try again.",
-      fieldErrors: { recaptcha: "Verification failed. Please try again." },
-    };
-  }
+  // if (!captcha.ok) {
+  //   console.warn("[contact] reCAPTCHA rejected:", captcha.reason);
+  //   return {
+  //     status: "error",
+  //     message: "We couldn't verify that you're human. Please tick the box and try again.",
+  //     fieldErrors: { recaptcha: "Verification failed. Please try again." },
+  //   };
+  // }
 
   if (!resolveTransport()) {
     console.error(

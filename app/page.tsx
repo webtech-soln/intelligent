@@ -15,7 +15,6 @@ export default function HomePage() {
       <ErpSpotlight />
       <Platforms />
       <Process />
-      <Testimonial />
       <CtaBand />
     </>
   );
