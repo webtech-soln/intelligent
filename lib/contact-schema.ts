@@ -21,6 +21,22 @@ export type ContactSubmission = {
 
 export type FieldErrors = Partial<Record<ContactField, string>>;
 
+export type ContactFormState = {
+  status: "idle" | "success" | "error";
+  message: string;
+  fieldErrors?: FieldErrors;
+};
+
+/**
+ * Lives here rather than beside the server action: a "use server" module may
+ * only export async functions, so exporting this object from there crashes the
+ * production build at module evaluation.
+ */
+export const INITIAL_CONTACT_STATE: ContactFormState = {
+  status: "idle",
+  message: "",
+};
+
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
 function clean(value: FormDataEntryValue | null): string {

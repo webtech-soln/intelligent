@@ -4,22 +4,14 @@ import { headers } from "next/headers";
 import {
   isHoneypotTripped,
   parseContactForm,
-  type FieldErrors,
+  type ContactFormState,
 } from "@/lib/contact-schema";
 import { renderContactEmail } from "@/lib/email-template";
 import { resolveTransport, sendContactEmail } from "@/lib/mailer";
 import { verifyRecaptcha } from "@/lib/recaptcha";
 
-export type ContactFormState = {
-  status: "idle" | "success" | "error";
-  message: string;
-  fieldErrors?: FieldErrors;
-};
-
-export const INITIAL_CONTACT_STATE: ContactFormState = {
-  status: "idle",
-  message: "",
-};
+// NOTE: this file is "use server" — it may export async functions and nothing
+// else. Types and constants belong in lib/contact-schema.ts.
 
 const SUCCESS_MESSAGE =
   "Thanks — your enquiry is on its way. We'll reply within one business day.";
@@ -33,10 +25,24 @@ async function clientIp(): Promise<string | undefined> {
   return forwarded?.split(",")[0]?.trim() || undefined;
 }
 
+/**
+ * Never lets an exception escape: an uncaught throw in a Server Action has no
+ * error boundary to land in and blanks the whole page instead of showing the
+ * form's own error state.
+ */
 export async function submitContactForm(
   _previousState: ContactFormState,
   formData: FormData
 ): Promise<ContactFormState> {
+  try {
+    return await handleSubmission(formData);
+  } catch (error) {
+    console.error("[contact] Unhandled error while handling enquiry", error);
+    return { status: "error", message: GENERIC_ERROR };
+  }
+}
+
+async function handleSubmission(formData: FormData): Promise<ContactFormState> {
   // Silently accept spam so bots get no signal about what tripped them up.
   if (isHoneypotTripped(formData)) {
     return { status: "success", message: SUCCESS_MESSAGE };

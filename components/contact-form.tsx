@@ -5,12 +5,12 @@ import { Check, ChevronDown, CircleAlert, CircleCheck } from "lucide-react";
 import { Button } from "./ui";
 import { Recaptcha } from "./recaptcha";
 import { SERVICE_CHIPS } from "@/lib/content";
+import { submitContactForm } from "@/app/contact/actions";
 import {
   INITIAL_CONTACT_STATE,
-  submitContactForm,
+  type ContactField,
   type ContactFormState,
-} from "@/app/contact/actions";
-import type { ContactField } from "@/lib/contact-schema";
+} from "@/lib/contact-schema";
 
 const FIELD_BASE =
   "h-[50px] w-full rounded-sm border bg-surface-2 px-4 text-[15px] text-fg outline-none transition-colors placeholder:text-fg-2";
